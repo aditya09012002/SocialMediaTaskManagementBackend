@@ -1,0 +1,5 @@
+# No env files on git
+# Node_modules
+node_modules
+dist
+.env
