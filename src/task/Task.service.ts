@@ -7,10 +7,10 @@ import { WebsocketService } from '../common/WebSocket.service';
 
 export class TaskService {
   private cloudinaryService: CloudinaryService;
-  private webSocketService: WebsocketService;
-  constructor(_webSocketService: WebsocketService) {
+  private websocketService: WebsocketService;
+  constructor() {
     this.cloudinaryService = new CloudinaryService();
-    this.webSocketService = _webSocketService;
+    this.websocketService = new WebsocketService();
   }
 
   SubmitTask = async (
@@ -51,7 +51,7 @@ export class TaskService {
 
       await session.commitTransaction();
 
-      this.webSocketService.broadcast({
+      this.websocketService.broadcast({
         event: 'task_submission',
         data: { task },
       });
@@ -121,7 +121,7 @@ export class TaskService {
         .lean();
 
       const totalTasks = await TaskSubmissionModel.countDocuments({
-        socialMediaHandle: userId,
+        userId,
       });
 
       return createResponse(false, 200, 'Tasks fetched successfully for user', {

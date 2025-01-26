@@ -6,7 +6,7 @@ import { WebsocketService } from '../common/WebSocket.service';
 class TaskController {
   private taskService: TaskService;
   constructor() {
-    this.taskService = new TaskService(WebsocketService.getInstance());
+    this.taskService = new TaskService();
   }
   public SubmitTaskController = async (req: Request, res: Response) => {
     const { name, socialMediaHandle } = req.body;
