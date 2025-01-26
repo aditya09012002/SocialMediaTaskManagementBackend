@@ -8,9 +8,7 @@ class TaskController {
   private taskService: TaskService;
   constructor() {
     const wsPort = config.wsPort;
-    this.taskService = new TaskService(
-      new WebsocketService(parseInt(wsPort as string)),
-    );
+    this.taskService = new TaskService(new WebsocketService());
   }
   public SubmitTaskController = async (req: Request, res: Response) => {
     const { name, socialMediaHandle } = req.body;

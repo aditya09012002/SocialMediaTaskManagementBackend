@@ -7,8 +7,8 @@ export class WebsocketService {
   // For production use in memory database like Redis
   private clients: Set<WebSocket>;
 
-  constructor(port: number) {
-    this.wss = new WebSocketServer({ port });
+  constructor() {
+    this.wss = new WebSocketServer({ noServer: true });
     this.clients = new Set();
 
     this.wss.on('connection', (ws) => {
@@ -22,7 +22,12 @@ export class WebsocketService {
         console.log('Websocket Error:', error);
       });
     });
-    console.log(`WebSocket server running on ws://localhost:${port}`);
+  }
+
+  public handleUpgrade(req: any, socket: any, head: any) {
+    this.wss.handleUpgrade(req, socket, head, (ws: WebSocket) => {
+      this.wss.emit('connection', ws, req);
+    });
   }
 
   broadcast(data: object) {
