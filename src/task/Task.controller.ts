@@ -1,14 +1,12 @@
 import { Request, Response } from 'express';
 import { createResponse } from '../types/GenericReponse';
 import { TaskService } from './Task.service';
-import config from '../../config/config';
 import { WebsocketService } from '../common/WebSocket.service';
 
 class TaskController {
   private taskService: TaskService;
   constructor() {
-    const wsPort = config.wsPort;
-    this.taskService = new TaskService(new WebsocketService());
+    this.taskService = new TaskService(WebsocketService.getInstance());
   }
   public SubmitTaskController = async (req: Request, res: Response) => {
     const { name, socialMediaHandle } = req.body;

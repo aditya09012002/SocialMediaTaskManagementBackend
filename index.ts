@@ -6,7 +6,7 @@ import { dbConnect } from './src/common/dbConnect';
 import { WebsocketService } from './src/common/WebSocket.service';
 
 const PORT = process.env.PORT || 3000;
-const websocketService = new WebsocketService();
+const websocketService = WebsocketService.getInstance();
 const server = createServer(app).listen(PORT, () => {
   dbConnect();
   console.log(`API started and listening on port ${PORT}`);
